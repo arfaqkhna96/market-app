@@ -2,7 +2,7 @@ import React from 'react';
 
 const Navbar = ({ categories, selectedCategory, handleCategoryClick}) => {
   return (
-    <nav className="sidebar">
+    <nav className="sidebar ">
       <ul>
         {categories.map((category) => (
           <li

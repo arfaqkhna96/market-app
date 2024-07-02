@@ -3,6 +3,7 @@ import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header'
 import ProductsList from './ProductsList';
+import Cart from './Components/Cart';
 import './App.css'
 
 const categories = [
@@ -20,7 +21,7 @@ const categories = [
 
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("Fruits");
-  const [show, setShow]  = useState(false);
+  const [show, setShow]  = useState(true);
   const [cart,  setCart]  = useState([]);
 
 
@@ -44,17 +45,14 @@ const App = () => {
 
   return (
     <div className='h-screen'>
-      <Header size = {cart.length} />
-      <div className="flex gap-4">
-        <div>
+      <Header size = {cart.length} setShow={setShow} />
+      {
+        show ? <div className="flex">
           <Navbar
             categories={categories}
             selectedCategory={selectedCategory}
-            handleCategoryClick={handleCategoryClick}   
+            handleCategoryClick={handleCategoryClick}
           />
-
-        </div>
-        <div>
           <Home
             categories={categories}
             selectedCategory={selectedCategory}
@@ -63,9 +61,8 @@ const App = () => {
             cartItems={cart}
             handleRemoveClick={handleRemoveClick}
           />
-          
-        </div>
-      </div>
+      </div> : <Cart cart={cart} setCart={setCart} />
+      }
     </div>
   );
 };
