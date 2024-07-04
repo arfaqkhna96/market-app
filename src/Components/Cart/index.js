@@ -2,16 +2,16 @@ import { MdOutlineDelete } from "react-icons/md";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useState, useEffect } from "react";
 
-const Cart = ({ cart,setCart }) => {
+const Cart = ({ cart,setCart, handleChange }) => {
 
     const [price, setPrice] = useState(0);
 
     const handlePrice = () => {
         let sumAmount = 0;
         cart.map(item => (
-            sumAmount += item.price
+            sumAmount += item.price * item.quantity
         ))
-        setPrice(sumAmount)
+        setPrice(sumAmount.toFixed(2))
     }
 
     useEffect(() => {
@@ -40,12 +40,12 @@ const Cart = ({ cart,setCart }) => {
                                     <p className="w-24">{item.name}</p>
                                 </div>
                                 <div className="flex gap-5">
-                                    <button><FaMinus /></button>
-                                    <span>1</span>
-                                    <button><FaPlus /></button>
+                                    <button onClick={()=>handleChange(item,-1)}><FaMinus /></button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={()=>handleChange(item,+1)}><FaPlus /></button>
                                 </div>
                                 <p className="w-24">{item.quantity} x ${item.price}</p>
-                                <p>${item.price}</p>
+                                <p>${(item.price * item.quantity).toFixed(2)}</p>
                                 <button onClick={()=>(handleRemove(item.id))}><MdOutlineDelete className="text-2xl" /></button>
                             </li>
                         ))}
