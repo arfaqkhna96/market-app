@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './Components/Navbar';
 import Home from './Components/Home';
 import Header from './Components/Header'
 import ProductsList from './ProductsList';
 import Cart from './Components/Cart';
+import Login from './Components/Login';
+import Register from './Components/RegisterPage';
 import './App.css'
 
 const categories = [
@@ -21,7 +24,6 @@ const categories = [
 
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("Fruits");
-  const [show, setShow] = useState(true);
   const [cart, setCart] = useState([]);
 
   const handleChange = (item, d) => {
@@ -61,10 +63,11 @@ const App = () => {
   };
 
   return (
-    <div className='h-screen'>
-      <Header size={cart.length} setShow={setShow} />
-      {
-        show ? <div className="flex">
+    <Router>
+      <div className='h-screen flex flex-col '>
+      <Header size={cart.length} />
+      <Routes>
+        <Route path="/" element={<div className="flex">
           <Navbar
             categories={categories}
             selectedCategory={selectedCategory}
@@ -79,9 +82,13 @@ const App = () => {
             handleRemoveClick={handleRemoveClick}
 
           />
-        </div> : <Cart cart={cart} setCart={setCart} handleChange={handleChange} />
-      }
+        </div>} />
+        <Route path="/cart" element={<Cart cart={cart} setCart={setCart} handleChange={handleChange} />} />
+      <Route path="/login" element={<Login />} />
+      <Route path='/register' element={<Register />} />
+      </Routes>
     </div>
+    </Router>
   );
 };
 
