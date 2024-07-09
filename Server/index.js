@@ -1,7 +1,66 @@
 const express = require('express');
+const sqlite3 = require('sqlite3').verbose();
+const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+const port = 5500;
 
-app.listen(5500,()=>{
-    console.log("Listening")
-})
+app.use(cors());
+app.use(bodyParser.json());
+
+// Initialize SQLite database
+const db = new sqlite3.Database('usersDB.db', (err) => {
+  if (err) {
+    console.error('Error opening database:', err.message);
+  } else {
+    db.run(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        fullName TEXT NOT NULL,
+        email TEXT NOT NULL,
+        mobileNumber TEXT NOT NULL,
+        password TEXT NOT NULL
+      )
+    `);
+  }
+});
+
+// API endpoint to register a new user
+app.post('/register', (req, res) => {
+  const { fullName, email, mobileNumber, password } = req.body;
+
+  db.run(`
+    INSERT INTO users (fullName, email, mobileNumber, password)
+    VALUES (?, ?, ?, ?)
+  `, [fullName, email, mobileNumber, password], function (err) {
+    if (err) {
+      console.error('Error inserting user:', err.message);
+      res.status(500).json({ message: 'Internal server error' });
+    } else {
+      res.status(201).json({ message: 'User registered successfully' });
+    }
+  });
+});
+
+// API endpoint to login a user
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+
+  db.get(`
+    SELECT * FROM users WHERE email = ? AND password = ?
+  `, [email, password], (err, row) => {
+    if (err) {
+      console.error('Error fetching user:', err.message);
+      res.status(500).json({ message: 'Internal server error' });
+    } else if (row) {
+      res.status(200).json({ message: 'Login successful', user: row });
+    } else {
+      res.status(401).json({ message: 'Invalid email or password' });
+    }
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on http://localhost:${port}`);
+});

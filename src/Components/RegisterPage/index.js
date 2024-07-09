@@ -1,45 +1,32 @@
 import React, { useState } from 'react';
 import SuccessModal from './modal';
 
-const Register = () => {
+function Register() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [mobileNumber, setMobileNumber] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordMatch, setPasswordMatch] = useState(true);
   const [mobileNumberValid, setMobileNumberValid] = useState(true);
+  const [passwordMatch, setPasswordMatch] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setPasswordMatch(password === confirmPassword);
+    setMobileNumberValid(/^\d{10}$/.test(mobileNumber));
 
-    // Regular expression for mobile number validation
-    const mobileNumberRegex = /^[0-9]{10}$/;
-    const isMobileNumberValid = mobileNumberRegex.test(mobileNumber);
-
-    if (!isMobileNumberValid) {
-      setMobileNumberValid(false);
-      return;
-    }
-
-    if (password === confirmPassword) {
-      // Handle registration logic here
-      console.log('Full Name:', fullName);
-      console.log('Email:', email);
-      console.log('Mobile Number:', mobileNumber);
-      console.log('Password:', password);
-      // Reset form and states
-      setFullName('');
-      setEmail('');
-      setMobileNumber('');
-      setPassword('');
-      setConfirmPassword('');
-      setPasswordMatch(true);
-      setMobileNumberValid(true);
-      setShowModal(true);
-    } else {
-      setPasswordMatch(false);
+    if (passwordMatch && mobileNumberValid) {
+      const response = await fetch('http://localhost:5500/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ fullName, email, mobileNumber, password }),
+      });
+      if (response.ok) {
+        setShowModal(true);
+      }
     }
   };
 
@@ -132,6 +119,6 @@ const Register = () => {
       <SuccessModal showModal={showModal} />
     </div>
   );
-};
+}
 
 export default Register;
