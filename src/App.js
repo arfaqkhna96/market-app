@@ -89,7 +89,7 @@ const App = () => {
   };
 
   const handleProfile = () =>{
-      setShowProfile(true)
+      setShowProfile(!showProfile)
   }
 
   const handleLogout =()=>{
