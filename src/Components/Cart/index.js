@@ -1,6 +1,9 @@
 import { MdOutlineDelete } from "react-icons/md";
 import { FaPlus, FaMinus } from "react-icons/fa";
 import { useState, useEffect } from "react";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link } from "react-router-dom";
+
 
 const Cart = ({ cart, setCart, handleChange }) => {
 
@@ -25,17 +28,20 @@ const Cart = ({ cart, setCart, handleChange }) => {
 
 
     return (
-        <div className="flex flex-col justify-center items-center w-full" style={{height:"82vh"}}>
+        <div className="flex flex-col relative justify-center items-center w-full" style={{height:"80vh"}}>
+            <div>
+            <Link to="/"><button className="absolute top-4 left-0 flex items-center gap-1 text-green-800 font-bold px-3"><FaArrowLeft />Continue Shopping</button></Link>
+            </div>
             {cart.length === 0 ? (
                     <div className="flex flex-col justify-center items-center w-96 border shadow-xl rounded-md">
                         <div className="h-64 w-64">
                             <img src="https://img.freepik.com/free-vector/man-shopping-supermarket_74855-7612.jpg?t=st=1720095345~exp=1720098945~hmac=42ae1c98b9d97fc33f231b7a95da381b877cb902ed17906522b54c6468035959&w=1060" alt="empty-cart" className="h-full" />
                         </div>
-                        <p className='text-emerald-900'>Cart is Empty</p>
+                        <p className='text-emerald-900 font-bold py-9'>Cart is Empty</p>
                     </div>
             ) : (
-                <div className="flex flex-col justify-center" style={{width:"60vw"}}>
-                    <ul className="flex flex-col gap-3">
+                <div className="flex absolute top-16 pt-2 flex-col justify-center" style={{width:"60vw",height:"80vh"}}>
+                    <ul className="flex flex-col gap-3 overflow-auto">
                         {cart.map((item, index) => (
                             <li key={index} className="flex justify-around items-center border-solid border-r-gray-400 border-b" >
                                 <div className="flex gap-3 justify-around items-center">
@@ -59,10 +65,17 @@ const Cart = ({ cart, setCart, handleChange }) => {
                         <p className="text-2xl">Total</p>
                         <p className="text-2xl">${price}</p>
                     </div>
+                    <div className="flex justify-end px-8">
+                
+                    <button className="border px-4 py-2 bg-green-900 rounded-md hover:ring ring-green-600 text-white mt-4 ">CheckOut</button>
+                    </div>
                 </div>
-
+                
             )}
+            
         </div>
+
+        
     );
 };
 

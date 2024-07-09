@@ -7,6 +7,7 @@ import ProductsList from './ProductsList';
 import Cart from './Components/Cart';
 import Login from './Components/Login';
 import Register from './Components/RegisterPage';
+import Profile from './Components/Profile';
 import './App.css'
 
 const categories = [
@@ -25,6 +26,12 @@ const categories = [
 const App = () => {
   const [selectedCategory, setSelectedCategory] = useState("Fruits");
   const [cart, setCart] = useState([]);
+  const [error, setError] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showProfile, setShowProfile] = useState(false);
+  const [username, setUserName] = useState('')
 
   const handleChange = (item, d) => {
     
@@ -53,6 +60,44 @@ const App = () => {
     setCart(updatedCartItems)
   }
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:5500/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('User logged in:', data);
+        setUserName(data.user.fullName);
+        localStorage.setItem("token",data.token);
+        setShowModal(true);
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setError('An error occurred during login');
+    }
+  };
+
+  const handleProfile = () =>{
+      setShowProfile(true)
+  }
+
+  const handleLogout =()=>{
+    setShowProfile(false);
+    localStorage.removeItem("token");
+    setShowModal(false);
+  }
+
 
   const handleAddClick = (item) => {
     const isPresent = cart.some((product) => product.id === item.id);
@@ -65,7 +110,8 @@ const App = () => {
   return (
     <Router>
       <div className='h-screen flex flex-col '>
-      <Header size={cart.length} />
+      <Header size={cart.length} handleProfile={handleProfile} />
+      {showProfile ? <Profile username={username} handleLogout={handleLogout} /> : ""}
       <Routes>
         <Route path="/" element={<div className="flex">
           <Navbar
@@ -84,7 +130,7 @@ const App = () => {
           />
         </div>} />
         <Route path="/cart" element={<Cart cart={cart} setCart={setCart} handleChange={handleChange} />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/login" element={<Login handleLogin={handleLogin} error={error} showModal={showModal} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />} />
       <Route path='/register' element={<Register />} />
       </Routes>
     </div>

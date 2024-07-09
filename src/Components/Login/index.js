@@ -1,40 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import LoginSuccessModal from './modal'
 
-function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [showModal, setShowModal] = useState(false);
+function Login({handleLogin,error,showModal,setEmail,setPassword, email,password}) {
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-
-    try {
-      const response = await fetch('http://localhost:5500/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('User logged in:', data);
-        setShowModal(true);
-      } else {
-        const errorData = await response.json();
-        setError(errorData.message);
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      setError('An error occurred during login');
-    }
-  };
-
+  
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center h-dvh bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center">Login</h2>
         <form className="space-y-6" onSubmit={handleLogin}>
