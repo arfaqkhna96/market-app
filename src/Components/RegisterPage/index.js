@@ -19,7 +19,7 @@ function Register() {
   const [showReEnter, setShowReEnter] = useState(false)
 
   const handleEmailBlur = async () => {
-    const response = await fetch('http://localhost:5500/check-email', {
+    const response = await fetch('https://market-app-backend-1.onrender.com/check-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +41,7 @@ function Register() {
     setMobileNumberValid(/^\d{10}$/.test(mobileNumber));
 
     if (passwordMatch && mobileNumberValid && !emailExists) {
-      const response = await fetch('http://localhost:5000/register', {
+      const response = await fetch('https://market-app-backend-1.onrender.com/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
