@@ -41,7 +41,7 @@ function Register() {
     setMobileNumberValid(/^\d{10}$/.test(mobileNumber));
 
     if (passwordMatch && mobileNumberValid && !emailExists) {
-      const response = await fetch('http://localhost:5500/register', {
+      const response = await fetch('http://localhost:5000/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

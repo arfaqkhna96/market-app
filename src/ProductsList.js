@@ -194,7 +194,7 @@ const Products = [
     "category": "Dairy",
     "price": 3.49,
     "rating": 4.8,
-    "imageUrl": "https://img.freepik.com/free-vector/cheese-slices-3d-realistic-vector-illustration_107791-12115.jpg?semt=sph",
+    "imageUrl": "https://img.freepik.com/free-vector/cheese-slices-3d-realistic-vector-illustratn_107791-12115.jpg?semt=sph",
     "quantity": 1
   },
   {
@@ -203,7 +203,7 @@ const Products = [
     "category": "Dairy",
     "price": 2.49,
     "rating": 4.7,
-    "imageUrl": "https://img.freepik.com/free-photo/greek-yogurt-wooden-table_114579-25762.jpg?semt=sph",
+    "imageUrl": "https://img.freepik.comek-yogurt-wooden-tle_114579-25762.jpg?semt=sph",
     "quantity": 1
   },
   {
@@ -212,7 +212,7 @@ const Products = [
     "category": "Dairy",
     "price": 2.99,
     "rating": 4.6,
-    "imageUrl": "https://img.freepik.com/free-photo/tasty-fresh-butter-isolated-white_144627-28284.jpg?semt=sph",
+    "imageUrl": "https://img.freepik.com/free-photo/tasty-fresh-butter-isolated-white_1627-28284.jpg?semt=sph",
     "quantity": 1
   },
   {
@@ -221,7 +221,7 @@ const Products = [
     "category": "Dairy",
     "price": 1.99,
     "rating": 4.5,
-    "imageUrl": "https://img.freepik.com/free-photo/cream-isolated-white_144627-28126.jpg?semt=sph",
+    "imageUrl": "https://img.ffree-photo/cream-isolated-white_144627-28126.jpg?semt=sph",
     "quantity": 1
   },
   {
