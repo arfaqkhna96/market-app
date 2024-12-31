@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GITHUB_REPO = 'https://github.com/arfaqkhna96/market-app.git'
-        BRANCH = 'main' // Ensuring this matches your repository's branch
+        BRANCH = 'main' // Ensure this matches your repository's branch
         GIT_CREDENTIALS_ID = '03468351-69ce-4c71-8f51-f7249a519c64' // Your Jenkins credentials ID
     }
 
