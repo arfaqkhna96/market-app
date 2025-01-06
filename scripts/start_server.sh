@@ -1,11 +1,14 @@
 #!/bin/bash
-echo starting server
 
-# here we just use npm to run the build
-cd /var/www/
-echo building application...
-sudo npm run build
+# # navigate to app folder
+# cd app
 
-# start the application with pm2
-echo starting application...
-sudo pm2 start npm -- run production
+# # initial startup by running react-script "start", name process "marketing"
+# # --watch watches and restarts if files change
+# npm start
+# pm2 start
+# pm2 startup
+# pm2 save
+# pm2 restart all
+systemctl -l enable nginx
+systemctl -l start nginx
