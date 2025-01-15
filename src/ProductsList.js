@@ -5,7 +5,7 @@ const Products = [
     "category": "Fruits",
     "price": 2.99,
     "rating": 4.8,
-    "imageUrl": "https://img.freepik.com/free-psd/close-up-delicious-ripe-apple_23-2151441914.jpg?semt=sph",
+    "imageUrl": "",
     "quantity": 1
   },
   {
