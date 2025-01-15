@@ -1,14 +1,52 @@
 pipeline {
     agent any
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                sh 'npm install'
+                script {
+                    if (isUnix()) {
+                        sh 'git checkout ...'
+                    } else {
+                        bat 'git checkout ...'
+                    }
+                }
             }
         }
-        stage('Test') { 
+        stage('Build') {
             steps {
-                sh './jenkins/scripts/test.sh' 
+                script {
+                    if (isUnix()) {
+                        sh './jenkins/scripts/build.sh'
+                    } else {
+                        bat 'jenkins\\scripts\\build.bat'
+                    }
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh './jenkins/scripts/test.sh'
+                    } else {
+                        bat 'jenkins\\scripts\\test.bat'
+                    }
+                }
+            }
+        }
+        stage('Deliver') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh './jenkins/scripts/deliver.sh'
+                        input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                        sh './jenkins/scripts/kill.sh'
+                    } else {
+                        bat 'jenkins\\scripts\\deliver.bat'
+                        input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                        bat 'jenkins\\scripts\\kill.bat'
+                    }
+                }
             }
         }
     }
