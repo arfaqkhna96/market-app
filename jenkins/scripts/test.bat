@@ -1,26 +1,20 @@
 @echo off
 
-echo The following "npm" command (if executed) installs the "cross-env"
-echo dependency into the local "node_modules" directory, which will ultimately
-echo be stored in the Jenkins home directory. As described in
-echo https://docs.npmjs.com/cli/install, the "--save-dev" flag causes the
-echo "cross-env" dependency to be installed as "devDependencies". For the
-echo purposes of this tutorial, this flag is not important. However, when
-echo installing this dependency, it would typically be done so using this
-echo flag. For a comprehensive explanation about "devDependencies", see
-echo https://stackoverflow.com/questions/18875674/whats-the-difference-between-dependencies-devdependencies-and-peerdependencies.
+echo The following "npm" command installs the "react-scripts" package into the local
+echo "node_modules" directory and saves it as a dependency.
+echo on
+npm install react-scripts --save
+echo off
 
-REM Install cross-env (commented out, remove REM to execute)
-REM npm install --save-dev cross-env
+echo Listing installed packages to verify "react-scripts" installation.
+echo on
+npm ls react-scripts
+echo off
 
 echo The following "npm" command tests that your simple Node.js/React
 echo application renders satisfactorily. This command actually invokes the test
 echo runner Jest (https://facebook.github.io/jest/).
-
-REM Enable command echoing
 echo on
-
-REM Run tests
 npm test --passWithNoTests
 
 REM Check the exit code of the npm test command
@@ -32,5 +26,4 @@ if %ERRORLEVEL% NEQ 0 (
     exit /b 0
 )
 
-REM Disable command echoing
 echo off
