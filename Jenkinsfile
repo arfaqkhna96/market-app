@@ -39,10 +39,10 @@ pipeline {
                 script {
                     if (isUnix()) {
                         sh './jenkins/scripts/deliver.sh'
-                        sh './jenkins/scripts/kill.sh'
+                        
                     } else {
                         bat 'jenkins\\scripts\\deliver.bat'
-                        bat 'jenkins\\scripts\\kill.bat'
+                        
                     }
                 }
             }
