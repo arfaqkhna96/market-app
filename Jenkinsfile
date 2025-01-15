@@ -16,9 +16,9 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh './jenkins/scripts/build.sh'
+                        sh 'npm install'
                     } else {
-                        bat 'jenkins\\scripts\\build.bat'
+                        bat 'npm install'
                     }
                 }
             }
